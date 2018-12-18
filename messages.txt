@@ -1,0 +1,3 @@
+mladen@gmail.com|sandra@gmail.com|Zdravo Sandra!
+mladen@gmail.com|maja@gmail.com|Zdravo Majo!
+mladen@gmail.com|sandra@gmail.com|Bonjour!

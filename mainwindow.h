@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <QDialogButtonBox>
 #include <commandwindow.h>
 
 namespace Ui {
@@ -27,7 +28,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QList<QStringList> mailList;
-    CommandWindow *commandWindow;
+    CommandWindow commandWindow;
 };
 
 #endif // MAINWINDOW_H

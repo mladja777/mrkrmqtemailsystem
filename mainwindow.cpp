@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->passwordEntry->setEchoMode(QLineEdit::Password);
     QObject::connect(ui->exitButton, SIGNAL(released()), this, SLOT(close_main_window()));
+    QObject::connect(ui->loginButton, SIGNAL(released()), this, SLOT(on_loginButton_clicked()));
 }
 
 void MainWindow::on_loginButton_clicked(void)
@@ -18,7 +19,8 @@ void MainWindow::on_loginButton_clicked(void)
     QFile file("users.txt");
     if(!file.open(QIODevice::ReadOnly))
     {
-        return;
+        QMessageBox::warning(this, "Error: ", "No user files.");
+        close_main_window();
     }
 
     QTextStream in(&file);
@@ -38,8 +40,8 @@ void MainWindow::on_loginButton_clicked(void)
     QMessageBox::warning(this, "Error: ", "Wrong username or password.");
     return;
 success:
-    commandWindow->show();
-    this->hide();
+    commandWindow.show();
+    this->setVisible(false);
 }
 
 void MainWindow::close_main_window()

@@ -1,3 +1,12 @@
-mladen@gmail.com|sandra@gmail.com|Zdravo Sandra!
-mladen@gmail.com|maja@gmail.com|Zdravo Majo!
-mladen@gmail.com|sandra@gmail.com|Bonjour!
+mladen@gmail.com|sandra@gmail.com|Zdravo Sandra!|NOTSEEN
+mladen@gmail.com|maja@gmail.com|Zdravo Majo!|SEEN
+mladen@gmail.com|sandra@gmail.com|Bonjour!|NOTSEEN
+mladen@gmail.com|maja@gmail.com|Kako si?|NOTSEEN
+mladen@gmail.com|maja@gmail.com|Sta ima?|NOTSEEN
+maja@gmail.com|mladen@gmail.com|Dobro sam, kako si ti?|NOTSEEN
+mladen@gmail.com|maja@gmail.com|Odlicno, sta ima?|NOTSEEN
+maja@gmail.com|mladen@gmail.com|nista.|NOTSEEN
+|maja@gmail.com|Hello.|NOTSEEN
+|maja@gmail.com|Hello. from the other side.|NOTSEEN
+mladen@gmail.com|maja@gmail.com|Hello.|NOTSEEN
+mladen@gmail.com|maja@gmail.com|Hello.|NOTSEEN

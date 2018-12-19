@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QLineEdit>
 #include <QDialogButtonBox>
+//#include <QTcpSocket>
+//#include <QTcpServer>
 #include <commandwindow.h>
 
 namespace Ui {
@@ -25,10 +27,27 @@ private slots:
     void on_loginButton_clicked();
     void close_main_window();
 
+    void on_runServerButton_released();
+
+    void on_runClientButton_released();
+
+    void on_logoutButton_released();
+
+    void on_receiveButton_released();
+
+    void on_checkButton_released();
+
+    void on_sendButton_released();
+
+    void on_statButton_released();
+
 private:
     Ui::MainWindow *ui;
     QList<QStringList> mailList;
+    QList<QStringList> messageList;
+    qint16 notSeenMessages;
     CommandWindow commandWindow;
+    QString user;
 };
 
 #endif // MAINWINDOW_H

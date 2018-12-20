@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[10];
-    char stringdata0[207];
+    QByteArrayData data[20];
+    char stringdata0[322];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,23 +30,37 @@ struct qt_meta_stringdata_MainWindow_t {
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
-QT_MOC_LITERAL(1, 11, 22), // "on_loginButton_clicked"
-QT_MOC_LITERAL(2, 34, 0), // ""
-QT_MOC_LITERAL(3, 35, 17), // "close_main_window"
-QT_MOC_LITERAL(4, 53, 27), // "on_runServerButton_released"
-QT_MOC_LITERAL(5, 81, 27), // "on_runClientButton_released"
-QT_MOC_LITERAL(6, 109, 24), // "on_logoutButton_released"
-QT_MOC_LITERAL(7, 134, 25), // "on_receiveButton_released"
-QT_MOC_LITERAL(8, 160, 23), // "on_checkButton_released"
-QT_MOC_LITERAL(9, 184, 22) // "on_sendButton_released"
+QT_MOC_LITERAL(1, 11, 12), // "dataReceived"
+QT_MOC_LITERAL(2, 24, 0), // ""
+QT_MOC_LITERAL(3, 25, 7), // "qbArray"
+QT_MOC_LITERAL(4, 33, 22), // "on_loginButton_clicked"
+QT_MOC_LITERAL(5, 56, 17), // "close_main_window"
+QT_MOC_LITERAL(6, 74, 27), // "on_runServerButton_released"
+QT_MOC_LITERAL(7, 102, 27), // "on_runClientButton_released"
+QT_MOC_LITERAL(8, 130, 24), // "on_logoutButton_released"
+QT_MOC_LITERAL(9, 155, 25), // "on_receiveButton_released"
+QT_MOC_LITERAL(10, 181, 23), // "on_checkButton_released"
+QT_MOC_LITERAL(11, 205, 22), // "on_sendButton_released"
+QT_MOC_LITERAL(12, 228, 22), // "on_statButton_released"
+QT_MOC_LITERAL(13, 251, 13), // "connectToHost"
+QT_MOC_LITERAL(14, 265, 4), // "host"
+QT_MOC_LITERAL(15, 270, 9), // "writeData"
+QT_MOC_LITERAL(16, 280, 4), // "data"
+QT_MOC_LITERAL(17, 285, 13), // "newConnection"
+QT_MOC_LITERAL(18, 299, 12), // "disconnected"
+QT_MOC_LITERAL(19, 312, 9) // "readyRead"
 
     },
-    "MainWindow\0on_loginButton_clicked\0\0"
-    "close_main_window\0on_runServerButton_released\0"
+    "MainWindow\0dataReceived\0\0qbArray\0"
+    "on_loginButton_clicked\0close_main_window\0"
+    "on_runServerButton_released\0"
     "on_runClientButton_released\0"
     "on_logoutButton_released\0"
     "on_receiveButton_released\0"
-    "on_checkButton_released\0on_sendButton_released"
+    "on_checkButton_released\0on_sendButton_released\0"
+    "on_statButton_released\0connectToHost\0"
+    "host\0writeData\0data\0newConnection\0"
+    "disconnected\0readyRead"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,22 +70,34 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   89,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x08 /* Private */,
-       3,    0,   55,    2, 0x08 /* Private */,
-       4,    0,   56,    2, 0x08 /* Private */,
-       5,    0,   57,    2, 0x08 /* Private */,
-       6,    0,   58,    2, 0x08 /* Private */,
-       7,    0,   59,    2, 0x08 /* Private */,
-       8,    0,   60,    2, 0x08 /* Private */,
-       9,    0,   61,    2, 0x08 /* Private */,
+       4,    0,   92,    2, 0x08 /* Private */,
+       5,    0,   93,    2, 0x08 /* Private */,
+       6,    0,   94,    2, 0x08 /* Private */,
+       7,    0,   95,    2, 0x08 /* Private */,
+       8,    0,   96,    2, 0x08 /* Private */,
+       9,    0,   97,    2, 0x08 /* Private */,
+      10,    0,   98,    2, 0x08 /* Private */,
+      11,    0,   99,    2, 0x08 /* Private */,
+      12,    0,  100,    2, 0x08 /* Private */,
+      13,    1,  101,    2, 0x08 /* Private */,
+      15,    1,  104,    2, 0x08 /* Private */,
+      17,    0,  107,    2, 0x08 /* Private */,
+      18,    0,  108,    2, 0x08 /* Private */,
+      19,    0,  109,    2, 0x08 /* Private */,
+
+ // signals: parameters
+    QMetaType::Void, QMetaType::QByteArray,    3,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,6 +105,12 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Bool, QMetaType::QString,   14,
+    QMetaType::Bool, QMetaType::QByteArray,   16,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -92,18 +124,36 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->on_loginButton_clicked(); break;
-        case 1: _t->close_main_window(); break;
-        case 2: _t->on_runServerButton_released(); break;
-        case 3: _t->on_runClientButton_released(); break;
-        case 4: _t->on_logoutButton_released(); break;
-        case 5: _t->on_receiveButton_released(); break;
-        case 6: _t->on_checkButton_released(); break;
-        case 7: _t->on_sendButton_released(); break;
+        case 0: _t->dataReceived((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
+        case 1: _t->on_loginButton_clicked(); break;
+        case 2: _t->close_main_window(); break;
+        case 3: _t->on_runServerButton_released(); break;
+        case 4: _t->on_runClientButton_released(); break;
+        case 5: _t->on_logoutButton_released(); break;
+        case 6: _t->on_receiveButton_released(); break;
+        case 7: _t->on_checkButton_released(); break;
+        case 8: _t->on_sendButton_released(); break;
+        case 9: _t->on_statButton_released(); break;
+        case 10: { bool _r = _t->connectToHost((*reinterpret_cast< QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 11: { bool _r = _t->writeData((*reinterpret_cast< QByteArray(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
+        case 12: _t->newConnection(); break;
+        case 13: _t->disconnected(); break;
+        case 14: _t->readyRead(); break;
         default: ;
         }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        void **func = reinterpret_cast<void **>(_a[1]);
+        {
+            typedef void (MainWindow::*_t)(QByteArray );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::dataReceived)) {
+                *result = 0;
+                return;
+            }
+        }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -131,14 +181,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 15;
     }
     return _id;
+}
+
+// SIGNAL 0
+void MainWindow::dataReceived(QByteArray _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

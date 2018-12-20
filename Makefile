@@ -160,6 +160,7 @@ Makefile: EMailSystem.pro C:\Qt\5.6\msvc2015_64\mkspecs\win32-msvc2015\qmake.con
 		C:\Qt\5.6\msvc2015_64\mkspecs\features\win32\qt_config.prf \
 		C:\Qt\5.6\msvc2015_64\mkspecs\win32-msvc2015\qmake.conf \
 		C:\Qt\5.6\msvc2015_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		C:\Qt\5.6\msvc2015_64\mkspecs\features\exclusive_builds.prf \
 		C:\Qt\5.6\msvc2015_64\mkspecs\features\default_pre.prf \
 		C:\Qt\5.6\msvc2015_64\mkspecs\features\win32\default_pre.prf \
@@ -185,6 +186,7 @@ Makefile: EMailSystem.pro C:\Qt\5.6\msvc2015_64\mkspecs\win32-msvc2015\qmake.con
 		C:\Qt\5.6\msvc2015_64\lib\qtmaind.prl \
 		C:\Qt\5.6\msvc2015_64\lib\Qt5Widgets.prl \
 		C:\Qt\5.6\msvc2015_64\lib\Qt5Gui.prl \
+		C:\Qt\5.6\msvc2015_64\lib\Qt5Network.prl \
 		C:\Qt\5.6\msvc2015_64\lib\Qt5Core.prl
 	$(QMAKE) -spec win32-msvc2015 "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile EMailSystem.pro
 C:\Qt\5.6\msvc2015_64\mkspecs\features\spec_pre.prf:
@@ -274,6 +276,7 @@ C:\Qt\5.6\msvc2015_64\mkspecs\features\qt_config.prf:
 C:\Qt\5.6\msvc2015_64\mkspecs\features\win32\qt_config.prf:
 C:\Qt\5.6\msvc2015_64\mkspecs\win32-msvc2015\qmake.conf:
 C:\Qt\5.6\msvc2015_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 C:\Qt\5.6\msvc2015_64\mkspecs\features\exclusive_builds.prf:
 C:\Qt\5.6\msvc2015_64\mkspecs\features\default_pre.prf:
 C:\Qt\5.6\msvc2015_64\mkspecs\features\win32\default_pre.prf:
@@ -299,6 +302,7 @@ EMailSystem.pro:
 C:\Qt\5.6\msvc2015_64\lib\qtmaind.prl:
 C:\Qt\5.6\msvc2015_64\lib\Qt5Widgets.prl:
 C:\Qt\5.6\msvc2015_64\lib\Qt5Gui.prl:
+C:\Qt\5.6\msvc2015_64\lib\Qt5Network.prl:
 C:\Qt\5.6\msvc2015_64\lib\Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-msvc2015 "CONFIG+=debug" "CONFIG+=qml_debug" -o Makefile EMailSystem.pro
@@ -314,7 +318,7 @@ clean: debug-clean release-clean  FORCE
 	-$(DEL_FILE) EMailSystem.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) EMailSystem.lib EMailSystem.pdb
+	-$(DEL_FILE) .qmake.stash EMailSystem.lib EMailSystem.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

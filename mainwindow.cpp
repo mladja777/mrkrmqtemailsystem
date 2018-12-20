@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    clientSocket = new QTcpSocket(this);
     ui->setupUi(this);
     ui->passwordEntry->setEchoMode(QLineEdit::Password);
     QObject::connect(ui->exitButton, SIGNAL(released()), this, SLOT(close_main_window()));
@@ -82,6 +83,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_runServerButton_released()
 {
+    server = new QTcpServer(this);
+    connect(server, SIGNAL(newConnection()), SLOT(newConnection()));
     ui->serverLabel->setText("Server is running...");
     ui->runServerButton->setEnabled(false);
     ui->runClientButton->setEnabled(true);
@@ -102,7 +105,14 @@ void MainWindow::on_runServerButton_released()
 
 void MainWindow::on_runClientButton_released()
 {
-    ui->serverLabel->setText("Client is running...");
+    if(!connectToHost("10.81.35.48"))
+    {
+        ui->serverLabel->setText("Connecting error!");
+    }
+    else
+    {
+        ui->serverLabel->setText("Client is running...");
+    }
     ui->runClientButton->setEnabled(false);
     ui->runServerButton->setEnabled(true);
     ui->loginButton->setEnabled(true);
@@ -258,4 +268,92 @@ void MainWindow::on_sendButton_released()
 void MainWindow::on_statButton_released()
 {
 
+}
+
+bool MainWindow::connectToHost(QString host)
+{
+    clientSocket->connectToHost(host, 1024);
+    return clientSocket->waitForConnected();
+}
+
+bool MainWindow::writeData(QByteArray data)
+{
+    if(clientSocket->state() == QAbstractSocket::ConnectedState)
+    {
+        clientSocket->write(IntToArray(data.size()));
+        clientSocket->write(data);
+        return clientSocket->waitForBytesWritten();
+    }
+    else
+    {
+        return false;
+    }
+}
+
+QByteArray MainWindow::IntToArray(qint32 source) //Use qint32 to ensure that the number have 4 bytes
+{
+    //Avoid use of cast, this is the Qt way to serialize objects
+    QByteArray temp;
+    QDataStream data(&temp, QIODevice::ReadWrite);
+    data << source;
+    return temp;
+}
+
+void MainWindow::newConnection()
+{
+    while(server->hasPendingConnections())
+    {
+        QTcpSocket *serverSocket = server->nextPendingConnection();
+        connect(serverSocket, SIGNAL(readyRead()), SLOT(readyRead()));
+        connect(serverSocket, SIGNAL(disconnected()), SLOT(disconnected()));
+        QByteArray *buf = new QByteArray();
+        qint32 *s = new qint32(0);
+        buffer.insert(serverSocket, buf);
+        sizes.insert(serverSocket, s);
+        ui->serverLabel->setText("Client connected to server.");
+    }
+}
+
+void MainWindow::disconnected()
+{
+    QTcpSocket *serverSocket = static_cast<QTcpSocket*>(sender());
+    QByteArray *buf = buffer.value(serverSocket);
+    qint32 *s = sizes.value(serverSocket);
+    serverSocket->deleteLater();
+    delete buf;
+    delete s;
+}
+
+void MainWindow::readyRead()
+{
+    QTcpSocket *serverSocket = static_cast<QTcpSocket*>(sender());
+    QByteArray *buf = buffer.value(serverSocket);
+    qint32 *s = sizes.value(serverSocket);
+    qint32 size = *s;
+    while (serverSocket->bytesAvailable() > 0) {
+        buf->append(serverSocket->readAll());
+        while ((size == 0 && buf->size() >= 4) || (size > 0 && buf->size() >= size)) {
+            if(size == 0 && buf->size() >= 4)
+            {
+                size = ArrayToInt(buf->mid(0, 4));
+                *s = size;
+                buf->remove(0, 4);
+            }
+            if(size > 0 && buf->size() >= size)
+            {
+                QByteArray serverData = buf->mid(0, 4);
+                size = 0;
+                *s = size;
+                emit dataReceived(serverData);
+            }
+        }
+    }
+}
+
+qint32 MainWindow::ArrayToInt(QByteArray source)
+{
+    qint32 temp;
+    QDataStream data(&source, QIODevice::ReadWrite);
+    data >> temp;
+    return temp;
 }

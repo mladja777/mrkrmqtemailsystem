@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->passwordEntry->setEchoMode(QLineEdit::Password);
     QObject::connect(ui->exitButton, SIGNAL(released()), this, SLOT(close_main_window()));
     QObject::connect(ui->loginButton, SIGNAL(released()), this, SLOT(on_loginButton_clicked()));
-    QObject::connect(clientSocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(handleStateChange(QAbstractSocket::SocketState)));
 }
 
 void MainWindow::on_loginButton_clicked(void)
@@ -112,7 +111,14 @@ void MainWindow::on_runClientButton_released()
 {
     QString host = ui->IPEntry->text();
     clientSocket->connectToHost(host, 27015);
-    ui->serverLabel->setText("Client is running...");
+    if(clientSocket->state() == QTcpSocket::ConnectedState)
+    {
+        ui->serverLabel->setText("Client is connected...");
+    }
+    else
+    {
+        ui->serverLabel->setText("Client connecting failed...");
+    }
     ui->runClientButton->setEnabled(false);
     ui->runServerButton->setEnabled(true);
     ui->loginButton->setEnabled(true);

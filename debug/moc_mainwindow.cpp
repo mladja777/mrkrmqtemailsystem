@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[20];
-    char stringdata0[322];
+    QByteArrayData data[23];
+    char stringdata0[381];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,10 @@ QT_MOC_LITERAL(15, 270, 9), // "writeData"
 QT_MOC_LITERAL(16, 280, 4), // "data"
 QT_MOC_LITERAL(17, 285, 13), // "newConnection"
 QT_MOC_LITERAL(18, 299, 12), // "disconnected"
-QT_MOC_LITERAL(19, 312, 9) // "readyRead"
+QT_MOC_LITERAL(19, 312, 9), // "readyRead"
+QT_MOC_LITERAL(20, 322, 17), // "handleStateChange"
+QT_MOC_LITERAL(21, 340, 28), // "QAbstractSocket::SocketState"
+QT_MOC_LITERAL(22, 369, 11) // "socketState"
 
     },
     "MainWindow\0dataReceived\0\0qbArray\0"
@@ -60,7 +63,8 @@ QT_MOC_LITERAL(19, 312, 9) // "readyRead"
     "on_checkButton_released\0on_sendButton_released\0"
     "on_statButton_released\0connectToHost\0"
     "host\0writeData\0data\0newConnection\0"
-    "disconnected\0readyRead"
+    "disconnected\0readyRead\0handleStateChange\0"
+    "QAbstractSocket::SocketState\0socketState"
 };
 #undef QT_MOC_LITERAL
 
@@ -70,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,23 +82,24 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   89,    2, 0x06 /* Public */,
+       1,    1,   94,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   92,    2, 0x08 /* Private */,
-       5,    0,   93,    2, 0x08 /* Private */,
-       6,    0,   94,    2, 0x08 /* Private */,
-       7,    0,   95,    2, 0x08 /* Private */,
-       8,    0,   96,    2, 0x08 /* Private */,
-       9,    0,   97,    2, 0x08 /* Private */,
-      10,    0,   98,    2, 0x08 /* Private */,
-      11,    0,   99,    2, 0x08 /* Private */,
-      12,    0,  100,    2, 0x08 /* Private */,
-      13,    1,  101,    2, 0x08 /* Private */,
-      15,    1,  104,    2, 0x08 /* Private */,
-      17,    0,  107,    2, 0x08 /* Private */,
-      18,    0,  108,    2, 0x08 /* Private */,
-      19,    0,  109,    2, 0x08 /* Private */,
+       4,    0,   97,    2, 0x08 /* Private */,
+       5,    0,   98,    2, 0x08 /* Private */,
+       6,    0,   99,    2, 0x08 /* Private */,
+       7,    0,  100,    2, 0x08 /* Private */,
+       8,    0,  101,    2, 0x08 /* Private */,
+       9,    0,  102,    2, 0x08 /* Private */,
+      10,    0,  103,    2, 0x08 /* Private */,
+      11,    0,  104,    2, 0x08 /* Private */,
+      12,    0,  105,    2, 0x08 /* Private */,
+      13,    1,  106,    2, 0x08 /* Private */,
+      15,    1,  109,    2, 0x08 /* Private */,
+      17,    0,  112,    2, 0x08 /* Private */,
+      18,    0,  113,    2, 0x08 /* Private */,
+      19,    0,  114,    2, 0x08 /* Private */,
+      20,    1,  115,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QByteArray,    3,
@@ -114,6 +119,7 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 21,   22,
 
        0        // eod
 };
@@ -141,7 +147,19 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->newConnection(); break;
         case 13: _t->disconnected(); break;
         case 14: _t->readyRead(); break;
+        case 15: _t->handleStateChange((*reinterpret_cast< QAbstractSocket::SocketState(*)>(_a[1]))); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 15:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QAbstractSocket::SocketState >(); break;
+            }
+            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
@@ -181,13 +199,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 15;
+        if (_id < 16)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 16;
     }
     return _id;
 }

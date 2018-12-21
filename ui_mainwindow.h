@@ -41,13 +41,15 @@ public:
     QLineEdit *emailEntry;
     QLabel *passwordLabel;
     QLineEdit *passwordEntry;
-    QPushButton *runServerButton;
-    QPushButton *runClientButton;
-    QLabel *serverLabel;
     QHBoxLayout *horizontalLayout;
     QPushButton *loginButton;
     QSpacerItem *horizontalSpacer;
     QPushButton *exitButton;
+    QPushButton *runClientButton;
+    QLabel *IPLabel;
+    QLineEdit *IPEntry;
+    QPushButton *runServerButton;
+    QLabel *serverLabel;
     QTextBrowser *textBrowser;
     QVBoxLayout *verticalLayout_4;
     QPushButton *sendButton;
@@ -71,7 +73,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(778, 313);
+        MainWindow->resize(784, 333);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -114,22 +116,6 @@ public:
 
         verticalLayout_3->addLayout(verticalLayout);
 
-        runServerButton = new QPushButton(centralWidget);
-        runServerButton->setObjectName(QStringLiteral("runServerButton"));
-
-        verticalLayout_3->addWidget(runServerButton);
-
-        runClientButton = new QPushButton(centralWidget);
-        runClientButton->setObjectName(QStringLiteral("runClientButton"));
-
-        verticalLayout_3->addWidget(runClientButton);
-
-        serverLabel = new QLabel(centralWidget);
-        serverLabel->setObjectName(QStringLiteral("serverLabel"));
-        serverLabel->setEnabled(true);
-
-        verticalLayout_3->addWidget(serverLabel);
-
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
@@ -151,6 +137,32 @@ public:
 
 
         verticalLayout_3->addLayout(horizontalLayout);
+
+        runClientButton = new QPushButton(centralWidget);
+        runClientButton->setObjectName(QStringLiteral("runClientButton"));
+
+        verticalLayout_3->addWidget(runClientButton);
+
+        IPLabel = new QLabel(centralWidget);
+        IPLabel->setObjectName(QStringLiteral("IPLabel"));
+
+        verticalLayout_3->addWidget(IPLabel);
+
+        IPEntry = new QLineEdit(centralWidget);
+        IPEntry->setObjectName(QStringLiteral("IPEntry"));
+
+        verticalLayout_3->addWidget(IPEntry);
+
+        runServerButton = new QPushButton(centralWidget);
+        runServerButton->setObjectName(QStringLiteral("runServerButton"));
+
+        verticalLayout_3->addWidget(runServerButton);
+
+        serverLabel = new QLabel(centralWidget);
+        serverLabel->setObjectName(QStringLiteral("serverLabel"));
+        serverLabel->setEnabled(true);
+
+        verticalLayout_3->addWidget(serverLabel);
 
 
         horizontalLayout_2->addLayout(verticalLayout_3);
@@ -230,6 +242,7 @@ public:
 
         dstMailEntry = new QLineEdit(centralWidget);
         dstMailEntry->setObjectName(QStringLiteral("dstMailEntry"));
+        dstMailEntry->setEnabled(false);
 
         verticalLayout_2->addWidget(dstMailEntry);
 
@@ -240,6 +253,7 @@ public:
 
         messageEntry = new QTextEdit(centralWidget);
         messageEntry->setObjectName(QStringLiteral("messageEntry"));
+        messageEntry->setEnabled(false);
 
         verticalLayout_2->addWidget(messageEntry);
 
@@ -249,7 +263,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 778, 18));
+        menuBar->setGeometry(QRect(0, 0, 784, 18));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -268,11 +282,12 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         mailLabel->setText(QApplication::translate("MainWindow", "Enter your e-mail:", 0));
         passwordLabel->setText(QApplication::translate("MainWindow", "Enter you password:", 0));
-        runServerButton->setText(QApplication::translate("MainWindow", "Run server", 0));
-        runClientButton->setText(QApplication::translate("MainWindow", "Run client", 0));
-        serverLabel->setText(QString());
         loginButton->setText(QApplication::translate("MainWindow", "LOGIN", 0));
         exitButton->setText(QApplication::translate("MainWindow", "EXIT", 0));
+        runClientButton->setText(QApplication::translate("MainWindow", "Run client", 0));
+        IPLabel->setText(QApplication::translate("MainWindow", "Enter server IP:", 0));
+        runServerButton->setText(QApplication::translate("MainWindow", "Run server", 0));
+        serverLabel->setText(QString());
         sendButton->setText(QApplication::translate("MainWindow", "Send", 0));
         checkButton->setText(QApplication::translate("MainWindow", "Check", 0));
         statButton->setText(QApplication::translate("MainWindow", "Stat", 0));

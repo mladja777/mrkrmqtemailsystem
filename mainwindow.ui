@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>778</width>
-    <height>313</height>
+    <width>784</width>
+    <height>333</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -56,30 +56,6 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="runServerButton">
-        <property name="text">
-         <string>Run server</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="runClientButton">
-        <property name="text">
-         <string>Run client</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="serverLabel">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="loginButton">
@@ -115,6 +91,40 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="runClientButton">
+        <property name="text">
+         <string>Run client</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="IPLabel">
+        <property name="text">
+         <string>Enter server IP:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="IPEntry"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="runServerButton">
+        <property name="text">
+         <string>Run server</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="serverLabel">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -243,7 +253,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="dstMailEntry"/>
+       <widget class="QLineEdit" name="dstMailEntry">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_2">
@@ -253,7 +267,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QTextEdit" name="messageEntry"/>
+       <widget class="QTextEdit" name="messageEntry">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -264,7 +282,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>778</width>
+     <width>784</width>
      <height>18</height>
     </rect>
    </property>

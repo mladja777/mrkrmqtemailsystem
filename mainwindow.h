@@ -9,6 +9,7 @@
 #include <QLineEdit>
 #include <QDialogButtonBox>
 #include <QtNetwork>
+#include <QAbstractSocket>
 #include <commandwindow.h>
 
 namespace Ui {
@@ -43,6 +44,7 @@ private slots:
     void newConnection();
     void disconnected();
     void readyRead();
+    void handleStateChange(QAbstractSocket::SocketState socketState);
 
 private:
     Ui::MainWindow *ui;

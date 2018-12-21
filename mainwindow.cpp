@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->passwordEntry->setEchoMode(QLineEdit::Password);
     QObject::connect(ui->exitButton, SIGNAL(released()), this, SLOT(close_main_window()));
     QObject::connect(ui->loginButton, SIGNAL(released()), this, SLOT(on_loginButton_clicked()));
+    QObject::connect(clientSocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(handleStateChange(QAbstractSocket::SocketState)));
 }
 
 void MainWindow::on_loginButton_clicked(void)
@@ -85,7 +86,11 @@ void MainWindow::on_runServerButton_released()
 {
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), SLOT(newConnection()));
-    ui->serverLabel->setText("Server is running...");
+    if(server->listen(QHostAddress::Any, 27015))
+    {
+        ui->serverLabel->setText("Listening on port 27015...");
+    }
+    //ui->serverLabel->setText("Server is running...");
     ui->runServerButton->setEnabled(false);
     ui->runClientButton->setEnabled(true);
     ui->loginButton->setEnabled(false);
@@ -105,14 +110,9 @@ void MainWindow::on_runServerButton_released()
 
 void MainWindow::on_runClientButton_released()
 {
-    if(!connectToHost("10.81.35.48"))
-    {
-        ui->serverLabel->setText("Connecting error!");
-    }
-    else
-    {
-        ui->serverLabel->setText("Client is running...");
-    }
+    QString host = ui->IPEntry->text();
+    clientSocket->connectToHost(host, 27015);
+    ui->serverLabel->setText("Client is running...");
     ui->runClientButton->setEnabled(false);
     ui->runServerButton->setEnabled(true);
     ui->loginButton->setEnabled(true);
@@ -356,4 +356,9 @@ qint32 MainWindow::ArrayToInt(QByteArray source)
     QDataStream data(&source, QIODevice::ReadWrite);
     data >> temp;
     return temp;
+}
+
+void MainWindow::handleStateChange(QAbstractSocket::SocketState socketState)
+{
+    ui->serverLabel->setText("Client connected...");
 }

@@ -23,6 +23,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void MainWindow::on_check();
     QByteArray IntToArray(qint32 source);
     qint32 ArrayToInt(QByteArray source);
 

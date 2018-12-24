@@ -197,7 +197,7 @@ void MainWindow::on_receiveButton_released()
     messageList.clear();
 }
 
-void MainWindow::on_checkButton_released()
+void MainWindow::on_check()
 {
     ui->textBrowser->setText("");
     QFile file("messages.txt");
@@ -228,6 +228,13 @@ void MainWindow::on_checkButton_released()
     ui->textBrowser->insertPlainText(" new messages.\n");
     file.close();
     messageList.clear();
+}
+
+void MainWindow::on_checkButton_released()
+{
+    QByteArray flag;
+    flag.append("CCH");
+    MainWindow::writeData(flag);
 }
 
 void MainWindow::on_sendButton_released()
@@ -352,6 +359,29 @@ void MainWindow::readyRead()
                 *s = size;
                 emit dataReceived(serverData);
             }
+        }
+        QString dataForRead = QString::fromUtf8(*buf);
+        if (dataForRead[0] == 'C' && dataForRead[1] == 'C' && dataForRead[2] == 'H') {
+            on_check();
+            QByteArray tempCheck;
+            tempCheck.append("SCH");
+            tempCheck.append(MainWindow::IntToArray(notSeenMessages));
+            if(MainWindow::writeData(tempCheck))
+            {
+                ui->serverLabel->setText("SCH sent.");
+            }
+            else
+            {
+                ui->serverLabel->setText("SCH failed.");
+            }
+        }
+        if(dataForRead[0] == 'S' && dataForRead[1] == 'C' && dataForRead[2] == 'H')
+        {
+            dataForRead.remove(0, 3);
+            ui->textBrowser->insertPlainText("");
+            ui->textBrowser->insertPlainText("You have ");
+            ui->textBrowser->insertPlainText(dataForRead);
+            ui->textBrowser->insertPlainText(" new messages.\n");
         }
     }
 }

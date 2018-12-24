@@ -365,8 +365,13 @@ void MainWindow::readyRead()
             on_check();
             QByteArray tempCheck;
             tempCheck.append("SCH");
-            tempCheck.append(MainWindow::IntToArray(notSeenMessages));
-            if(MainWindow::writeData(tempCheck))
+            tempCheck.append(QString::number(notSeenMessages));
+            ui->textBrowser->insertPlainText(tempCheck);
+            serverSocket->write(IntToArray(tempCheck.size()));
+            serverSocket->write(tempCheck);
+            serverSocket->waitForBytesWritten();
+            /*
+            if(MainWindow::writeDataToClient(tempCheck, serverSocket))
             {
                 ui->serverLabel->setText("SCH sent.");
             }
@@ -374,6 +379,7 @@ void MainWindow::readyRead()
             {
                 ui->serverLabel->setText("SCH failed.");
             }
+            */
         }
         if(dataForRead[0] == 'S' && dataForRead[1] == 'C' && dataForRead[2] == 'H')
         {

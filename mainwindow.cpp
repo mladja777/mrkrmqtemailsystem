@@ -237,7 +237,7 @@ void MainWindow::on_checkButton_released()
     MainWindow::writeData(flag);
 }
 
-void MainWindow::on_sendButton_released()
+void MainWindow::on_send(QStringList qsl)
 {
     QFile file("messages.txt");
     if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -254,14 +254,9 @@ void MainWindow::on_sendButton_released()
         QStringList splitLine = line.split("|");
         messageList.append(splitLine);
     }
+    messageList.append(qsl);
     file.close();
     file.open(QIODevice::WriteOnly | QIODevice::Text);
-    QStringList tempMessage;
-    tempMessage.append(user);
-    tempMessage.append(ui->dstMailEntry->text());
-    tempMessage.append(ui->messageEntry->toPlainText());
-    tempMessage.append("NOTSEEN");
-    messageList.append(tempMessage);
     for(QList<QStringList>::iterator it = messageList.begin(); it != messageList.end(); it++)
     {
         for(qint16 i = 0; i < 4; i++)
@@ -276,6 +271,23 @@ void MainWindow::on_sendButton_released()
     }
     file.close();
     messageList.clear();
+    ui->textBrowser->insertPlainText("Message written.");
+}
+
+void MainWindow::on_sendButton_released()
+{
+    QString tempMessage;
+    tempMessage.append("CSE");
+    tempMessage.append(user);
+    tempMessage.append("|");
+    tempMessage.append(ui->dstMailEntry->text());
+    tempMessage.append("|");
+    tempMessage.append(ui->messageEntry->toPlainText());
+    tempMessage.append("|");
+    tempMessage.append("NOTSEEN");
+    QByteArray msg;
+    msg.append(tempMessage);
+    MainWindow::writeData(msg);
 }
 
 void MainWindow::on_statButton_released()
@@ -388,6 +400,12 @@ void MainWindow::readyRead()
             ui->textBrowser->insertPlainText("You have ");
             ui->textBrowser->insertPlainText(dataForRead);
             ui->textBrowser->insertPlainText(" new messages.\n");
+        }
+        if(dataForRead[0] == 'C' && dataForRead[1] == 'S' && dataForRead[2] == 'E')
+        {
+            dataForRead.remove(0, 3);
+            QStringList qsl = dataForRead.split("|");
+            on_send(qsl);
         }
     }
 }

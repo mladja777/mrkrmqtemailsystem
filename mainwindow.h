@@ -10,6 +10,8 @@
 #include <QDialogButtonBox>
 #include <QtNetwork>
 #include <QAbstractSocket>
+#include <time.h>
+#include <windows.h>
 #include <commandwindow.h>
 
 namespace Ui {

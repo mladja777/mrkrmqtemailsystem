@@ -9,16 +9,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->passwordEntry->setEchoMode(QLineEdit::Password);
     QObject::connect(ui->exitButton, SIGNAL(released()), this, SLOT(close_main_window()));
-    QObject::connect(ui->loginButton, SIGNAL(released()), this, SLOT(on_loginButton_clicked()));
+    QObject::connect(ui->loginButton, SIGNAL(pressed()), this, SLOT(on_loginButton_clicked()));
 }
 
 void MainWindow::on_loginButton_clicked(void)
 {
     QString email = ui->emailEntry->text();
     QString password = ui->passwordEntry->text();
+    qDebug() << "Input sa konzole: " << email << " sifra: " << password;
     user.append(email);
     bool loginSucces = false;
 
+    qDebug()<<clientSocket->state();
     QFile file("users.txt");
     if(!file.open(QIODevice::ReadOnly))
     {
@@ -30,16 +32,22 @@ void MainWindow::on_loginButton_clicked(void)
     while(!in.atEnd())
     {
         QString line = in.readLine();
+        qDebug()<<line;
         QStringList splitLine = line.split("|");
         mailList.append(splitLine);
     }
     for(QList<QStringList>::iterator i = mailList.begin(); i != mailList.end(); i++)
     {
-        if(QString::compare(i[0].first(), email, Qt::CaseSensitive) == 0 && QString::compare(i[1].first(), password, Qt::CaseSensitive))
+        qDebug() << "Provera emaila: " << i[0].first() << " vs " << email;
+        qDebug() << "Provera sifre: " << i[1].first() << " vs " << email;
+        if(QString::compare(i[0].first(), email, Qt::CaseSensitive) == 0)
         {
-            loginSucces = true;
-            on_runClientButton_released();
-            goto success;
+            if(QString::compare(i[1].first(), password, Qt::CaseSensitive))
+                {
+                    loginSucces = true;
+                    on_runClientButton_released();
+                    goto success;
+                }
         }
     }
     if(!loginSucces) QMessageBox::warning(this, "Error: ", "Wrong username or password.");
@@ -111,14 +119,7 @@ void MainWindow::on_runClientButton_released()
 {
     QString host = ui->IPEntry->text();
     clientSocket->connectToHost(host, 27015);
-    if(clientSocket->state() == QTcpSocket::ConnectedState)
-    {
-        ui->serverLabel->setText("Client is connected...");
-    }
-    else
-    {
-        ui->serverLabel->setText("Client connecting failed...");
-    }
+    qDebug() << clientSocket->state();
     ui->runClientButton->setEnabled(false);
     ui->runServerButton->setEnabled(true);
     ui->loginButton->setEnabled(true);
@@ -235,6 +236,9 @@ void MainWindow::on_checkButton_released()
     QByteArray flag;
     flag.append("CCH");
     MainWindow::writeData(flag);
+    QTcpServer *clientListen = new QTcpServer(this);
+    connect(clientListen, SIGNAL(newConnection()), SLOT(newConnection()));
+    clientListen->listen(QHostAddress::Any, 27015);
 }
 
 void MainWindow::on_send(QStringList qsl)
@@ -351,10 +355,18 @@ void MainWindow::disconnected()
 
 void MainWindow::readyRead()
 {
+    qDebug() << "readyRead()";
     QTcpSocket *serverSocket = static_cast<QTcpSocket*>(sender());
+    qDebug() << "1";
     QByteArray *buf = buffer.value(serverSocket);
+    qDebug() << buf;
+    qDebug() << *buf;
+    qDebug() << "2";
     qint32 *s = sizes.value(serverSocket);
+    qDebug() << s;
+    qDebug() << "3";
     qint32 size = *s;
+    qDebug() << "4";
     while (serverSocket->bytesAvailable() > 0) {
         buf->append(serverSocket->readAll());
         while ((size == 0 && buf->size() >= 4) || (size > 0 && buf->size() >= size)) {

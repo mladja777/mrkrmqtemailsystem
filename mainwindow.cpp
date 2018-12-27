@@ -163,7 +163,7 @@ void MainWindow::on_logoutButton_released()
     ui->messageEntry->setText("");
 }
 
-void MainWindow::on_receiveButton_released()
+void MainWindow::on_receive()
 {
     ui->textBrowser->setText("");
     QFile file("messages.txt");
@@ -196,6 +196,13 @@ void MainWindow::on_receiveButton_released()
     }
     file.close();
     messageList.clear();
+}
+
+void MainWindow::on_receiveButton_released()
+{
+    QByteArray msg;
+    msg.append("CRC");
+    MainWindow::writeData(msg);
 }
 
 void MainWindow::on_check()
@@ -294,9 +301,55 @@ void MainWindow::on_sendButton_released()
     MainWindow::writeData(msg);
 }
 
+void MainWindow::on_stat()
+{
+    ui->textBrowser->setText("");
+    QFile file("messages.txt");
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::warning(this, "Error: ", "No messages.");
+        file.close();
+        return;
+    }
+
+    senderStat.clear();
+    QTextStream in(&file);
+    while(!in.atEnd())
+    {
+        QString line = in.readLine();
+        QStringList splitLine = line.split("|");
+        messageList.append(splitLine);
+    }
+    notSeenMessages = 0;
+    for(QList<QStringList>::iterator it = messageList.begin(); it != messageList.end(); it++)
+    {
+        if(!senderStat.contains(it[0].at(0)))
+        {
+            senderStat[it[0].at(0)] = 1;
+        }
+        else
+        {
+            senderStat[it[0].at(0)]++;
+        }
+    }
+
+    for(QHash<QString, quint32>::iterator it = senderStat.begin(); it != senderStat.end(); it++)
+    {
+        ui->textBrowser->insertPlainText("You have ");
+        ui->textBrowser->insertPlainText(QStringLiteral("%1").arg(it.value()));
+        ui->textBrowser->insertPlainText(" new messages from ");
+        ui->textBrowser->insertPlainText(QStringLiteral("%1").arg(it.key()));
+        ui->textBrowser->insertPlainText(" .\n");
+    }
+    file.close();
+    messageList.clear();
+}
+
 void MainWindow::on_statButton_released()
 {
-
+    QByteArray msg;
+    msg.append("CST");
+    MainWindow::writeData(msg);
 }
 
 bool MainWindow::connectToHost(QString host)
@@ -419,6 +472,33 @@ void MainWindow::readyRead()
             QStringList qsl = dataForRead.split("|");
             on_send(qsl);
         }
+        if(dataForRead[0] == 'C' && dataForRead[1] == 'S' && dataForRead[2] == 'T')
+        {
+            dataForRead.remove(0, 3);
+            on_stat();
+            QByteArray tempCheck;
+            tempCheck.append("SCH");
+            for(QHash<QString, quint32>::iterator it = senderStat.begin(); it != senderStat.end(); it++)
+            {
+                tempCheck.append(it.key());
+                tempCheck.append("|");
+                tempCheck.append(QString::number(it.value()));
+                tempCheck.append("|");
+            }
+            serverSocket->write(IntToArray(tempCheck.size()));
+            serverSocket->write(tempCheck);
+            serverSocket->waitForBytesWritten();
+        }
+        if(dataForRead[0] == 'C' && dataForRead[1] == 'R' && dataForRead[2] == 'C')
+        {
+            dataForRead.remove(0, 3);
+            on_receive();
+        }
+        if(dataForRead[0] == 'C' && dataForRead[1] == 'D' && dataForRead[2] == 'E')
+        {
+            dataForRead.remove(0, 3);
+            on_delete(dataForRead);
+        }
     }
 }
 
@@ -433,4 +513,55 @@ qint32 MainWindow::ArrayToInt(QByteArray source)
 void MainWindow::handleStateChange(QAbstractSocket::SocketState socketState)
 {
     ui->serverLabel->setText("Client connected...");
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    QByteArray msg;
+    msg.append("CDE");
+    msg.append(QString::number(ui->spinBox->value()));
+    MainWindow::writeData(msg);
+}
+
+void MainWindow::on_delete(QString data)
+{
+    QFile file("messages.txt");
+    if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        QMessageBox::warning(this, "Error: ", "No messages.");
+        file.close();
+        return;
+    }
+
+    QTextStream in(&file);
+    while(!in.atEnd())
+    {
+        QString line = in.readLine();
+        QStringList splitLine = line.split("|");
+        messageList.append(splitLine);
+    }
+    file.close();
+    file.open(QIODevice::WriteOnly | QIODevice::Text);
+    quint32 i = 1;
+    quint32 forDel;
+    forDel = data.toInt();
+    for(QList<QStringList>::iterator it = messageList.begin(); it != messageList.end(); it++)
+    {
+        if(i != forDel)
+        {
+            for(qint16 i = 0; i < 4; i++)
+            {
+                in << it[0].at(i);
+                if(i < 3)
+                {
+                    in << "|";
+                }
+            }
+            in << '\n';
+        }
+        i++;
+    }
+    file.close();
+    messageList.clear();
+    ui->textBrowser->insertPlainText("Message deleted.");
 }

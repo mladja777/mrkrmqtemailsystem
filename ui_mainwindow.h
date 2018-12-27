@@ -21,6 +21,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QTextEdit>
@@ -55,6 +56,8 @@ public:
     QPushButton *sendButton;
     QPushButton *checkButton;
     QPushButton *statButton;
+    QLabel *label_3;
+    QSpinBox *spinBox;
     QPushButton *deleteButton;
     QPushButton *cleanButton;
     QPushButton *receiveButton;
@@ -201,6 +204,16 @@ public:
 
         verticalLayout_4->addWidget(statButton);
 
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        verticalLayout_4->addWidget(label_3);
+
+        spinBox = new QSpinBox(centralWidget);
+        spinBox->setObjectName(QStringLiteral("spinBox"));
+
+        verticalLayout_4->addWidget(spinBox);
+
         deleteButton = new QPushButton(centralWidget);
         deleteButton->setObjectName(QStringLiteral("deleteButton"));
         deleteButton->setEnabled(false);
@@ -291,6 +304,7 @@ public:
         sendButton->setText(QApplication::translate("MainWindow", "Send", 0));
         checkButton->setText(QApplication::translate("MainWindow", "Check", 0));
         statButton->setText(QApplication::translate("MainWindow", "Stat", 0));
+        label_3->setText(QApplication::translate("MainWindow", "Message num:", 0));
         deleteButton->setText(QApplication::translate("MainWindow", "Delete", 0));
         cleanButton->setText(QApplication::translate("MainWindow", "Clean", 0));
         receiveButton->setText(QApplication::translate("MainWindow", "Receive", 0));

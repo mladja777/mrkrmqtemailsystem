@@ -27,6 +27,9 @@ public:
     ~MainWindow();
     void MainWindow::on_check();
     void MainWindow::on_send(QStringList qsl);
+    void MainWindow::on_stat();
+    void MainWindow::on_receive();
+    void MainWindow::on_delete(QString data);
     QByteArray IntToArray(qint32 source);
     qint32 ArrayToInt(QByteArray source);
 
@@ -49,6 +52,7 @@ private slots:
     void disconnected();
     void readyRead();
     void handleStateChange(QAbstractSocket::SocketState socketState);
+    void on_deleteButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -62,6 +66,8 @@ private:
     QTcpServer *server;
     QHash<QTcpSocket*, QByteArray*> buffer;
     QHash<QTcpSocket*, qint32*> sizes;
+
+    QHash<QString, quint32> senderStat;
 };
 
 #endif // MAINWINDOW_H

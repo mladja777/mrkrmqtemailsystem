@@ -189,6 +189,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Message num:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox"/>
+      </item>
+      <item>
        <widget class="QPushButton" name="deleteButton">
         <property name="enabled">
          <bool>false</bool>
